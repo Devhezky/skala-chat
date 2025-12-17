@@ -150,7 +150,74 @@
                 });
             };
 
-            // ... (keep event listener) ...
+
+            window.addEventListener('message', (event) => {
+                if (!event.origin.endsWith('facebook.com')) return;
+
+                try {
+                    const data = JSON.parse(event.data);
+                    if (data.type == 'WA_EMBEDDED_SIGNUP' && data.event == 'FINISH') {
+                        wabaId = data.data.waba_id;
+                        const payload = {
+                            waba_id: data.data.waba_id,
+                            business_id: data.data.business_id,
+                            phone_number_id: data.data.phone_number_id,
+                            _token: "{{ csrf_token() }}"
+                        };
+
+                        $.ajax({
+                            url: "{{ route('user.whatsapp.account.embedded.signup') }}",
+                            type: "POST",
+                            data: payload,
+                            success: function(res) {
+                                if (res.data.success) {
+                                    notify('success', res.message);
+                                } else {
+                                    notify('error', res.message);
+                                }
+                            },
+                            error: function(err) {
+                                notify("error", "@lang('Failed to connect the business account')");
+                            }
+                        });
+                    }
+                } catch (e) {
+                    notify("error", "@lang('Failed to connect the business account')");
+                }
+            });
+
+            const fbLoginCallback = (response) => {
+                if (response.authResponse) {
+                    const code = response.authResponse.code;
+                    if (!code) return;
+                    $(".preloader").fadeIn();
+                    $.ajax({
+                        url: "{{ route('user.whatsapp.account.access.token') }}",
+                        type: "POST",
+                        data: {
+                            code: code,
+                            waba_id: wabaId,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(res) {
+                            $(".preloader").fadeOut();
+                            if (res.data) {
+                                notify('success', res.message);
+                                accessToken = res.data.access_token;
+                                launchPinModal(wabaId, accessToken);
+                            } else {
+                                notify('error', res.message);
+                            }
+                        },
+                        error: function(err) {
+                            $(".preloader").fadeOut();
+                            notify("error", "@lang('Failed to connect the business account')");
+                        }
+                    });
+                } else {
+                    notify("error", "@lang('Embedded signup failed')");
+                }
+            }
 
             const launchWhatsAppSignup = () => {
 
