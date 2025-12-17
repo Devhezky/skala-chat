@@ -237,4 +237,9 @@ class SiteController extends Controller
         $maintenance = Frontend::where('data_keys', 'maintenance.data')->first();
         return view('Template::maintenance', compact('pageTitle', 'maintenance'));
     }
+    public function deletion()
+    {
+        $pageTitle = 'Data Deletion Instruction';
+        return view('Template::deletion', compact('pageTitle'));
+    }
 }

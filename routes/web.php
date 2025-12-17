@@ -55,6 +55,7 @@ Route::controller('SiteController')->group(function () {
     Route::get('placeholder-image/{size}', 'placeholderImage')->withoutMiddleware('maintenance')->name('placeholder.image');
     Route::get('maintenance-mode', 'maintenance')->withoutMiddleware('maintenance')->name('maintenance');
 
+    Route::get('/deletion', 'deletion')->name('deletion');
     Route::get('/{slug}', 'pages')->name('pages');
     Route::get('/', 'index')->name('home');
 
