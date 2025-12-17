@@ -134,8 +134,9 @@ class LoginController extends Controller
             return to_route('user.profile.setting');
         }
 
-        $redirection = Intended::getRedirection();
-        return $redirection ? $redirection : to_route('user.home');
+        return to_route('user.home');
+        // $redirection = Intended::getRedirection();
+        // return $redirection ? $redirection : to_route('user.home');
     }
 
     protected function credentials(Request $request)
