@@ -8,7 +8,7 @@
                 <tr>
                     <td class="w-50 align-middle">
                         <img class="invoice-logo light-show float-start"
-                            src="{{ 'data:image/png;base64,' . base64_encode(file_get_contents(siteLogo())) }}" />
+                            src="{{ 'data:image/png;base64,' . base64_encode(file_get_contents(public_path('assets/images/logo_icon/logo.png'))) }}" />
                     </td>
                     <td class="w-50 align-middle">
                         <ul class="invoice-info clearfix">
