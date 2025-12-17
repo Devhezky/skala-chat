@@ -16,10 +16,7 @@
                             @lang('Connect WhatsApp')
                         </button>
                     @endif
-                    <a href="{{ route('user.whatsapp.account.add') }}" class="btn btn--base btn-shadow">
-                        <i class="las la-plus"></i>
-                        @lang('Add New')
-                    </a>
+                    {{-- Add New button removed as requested --}}
                 </div>
             </div>
         </div>
@@ -142,11 +139,12 @@
             var accessToken = null;
 
             window.fbAsyncInit = function() {
+                console.log("SKALA: Initializing FB SDK v19.0");
                 FB.init({
                     appId: "{{ gs('meta_app_id') }}",
                     autoLogAppEvents: true,
                     xfbml: true,
-                    version: 'v20.0'
+                    version: 'v19.0'
                 });
             };
 

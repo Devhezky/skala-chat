@@ -60,7 +60,7 @@
                 appId            : fbAppId,
                 autoLogAppEvents : true,
                 xfbml            : true,
-                version          : 'v20.0'
+                version          : 'v19.0'
             });
         };
 
