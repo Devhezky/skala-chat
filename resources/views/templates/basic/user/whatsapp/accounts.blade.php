@@ -10,7 +10,7 @@
             <div class="container-top__right">
                 <div class="btn--group">
                     @if (gs('whatsapp_embedded_signup'))
-                        <button type="button" class="btn btn--base btn-shadow whatsapp-connect" data-bs-toggle="tooltip"
+                        <button type="button" id="connectWhatsappBtn" class="btn btn--base btn-shadow" data-bs-toggle="tooltip"
                             title="@lang('Connect your existing or new WhatsApp Business account to our platform with embedded signup')">
                             <i class="lab la-whatsapp"></i>
                             @lang('Connect WhatsApp')
@@ -190,7 +190,8 @@
                         });
                     }
                 } catch (e) {
-                    notify("error", "@lang('Failed to connect the business account')");
+                    // console.error(e); 
+                    // Silent failure for non-JSON messages related to other FB events
                 }
             });
 
@@ -223,7 +224,7 @@
                         }
                     });
                 } else {
-                    notify("error", "@lang('Embedded signup failed')");
+                    notify("error", "@lang('Embedded signup failed or cancelled')");
                 }
             }
 
@@ -234,31 +235,30 @@
                     return;
                 }
 
+                // Double check for missing config
+                const appId = "{{ gs('meta_app_id') }}";
+                const configId = "{{ gs('meta_configuration_id') }}";
+                
+                if(!appId || !configId) {
+                     notify("error", "@lang('Meta App ID or Configuration ID is missing. Please contact admin.')");
+                     return;
+                }
+
                 FB.login(fbLoginCallback, {
-                    config_id: "{{ gs('meta_configuration_id') }}",
+                    config_id: configId,
                     response_type: 'code',
                     override_default_response_type: true,
                     extras: {
                         "version": "v20.0",
-                        sessionInfoVersion: '3',
+                        sessionInfoVersion: '3', // Checks for Coexistence support
                         setup: {},
                     }
                 });
             }
 
-            $('.whatsapp-connect').on('click', function(e) {
+            // New cleaner event listener
+            $('#connectWhatsappBtn').on('click', function(e) {
                 e.preventDefault();
-
-                let appId = "{{ gs('meta_app_id') }}";
-                let configurationId = "{{ gs('meta_configuration_id') }}";
-                // App Secret is not needed for frontend launch and should not be exposed or checked here
-                // let appSecret = "{{ gs('meta_app_secret') }}"; 
-
-                if (!appId || !configurationId) {
-                    notify("error", "@lang('The embedded signup feature is not available at this moment. Please check Admin Settings.')");
-                    return;
-                }
-
                 launchWhatsAppSignup();
             });
 
@@ -270,9 +270,7 @@
             function launchPinModal(waba_id, access_token) {
                 $('.whatsapp-connect-modal').find('input[name=waba_id]').val(waba_id);
                 $('.whatsapp-connect-modal').find('input[name=access_token]').val(access_token);
-
                 $('.whatsapp-connect-modal').modal('show');
-
                 window.addEventListener("beforeunload", refreshWarning);
             }
 
@@ -283,7 +281,6 @@
             $('.whatsapp-connect-modal form').on('submit', function() {
                 window.removeEventListener("beforeunload", refreshWarning);
             });
-
 
         })(jQuery);
     </script>
