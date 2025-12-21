@@ -151,12 +151,12 @@
             var accessToken = null;
 
             window.fbAsyncInit = function() {
-                console.log("SKALA: Initializing FB SDK v21.0");
+                console.log("SKALA: Initializing FB SDK v20.0");
                 FB.init({
                     appId: "{{ gs('meta_app_id') }}",
                     autoLogAppEvents: true,
                     xfbml: true,
-                    version: 'v21.0'
+                    version: 'v20.0'
                 });
             };
 
@@ -255,7 +255,7 @@
                     response_type: 'code',
                     override_default_response_type: true,
                     extras: {
-                        "version": "v21.0",
+                        "version": "v20.0",
                         sessionInfoVersion: '3', // Checks for Coexistence support
                         setup: {},
                     }
