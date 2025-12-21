@@ -11,7 +11,7 @@
                 <div class="btn--group">
                     @if (gs('whatsapp_embedded_signup'))
                         <button type="button" class="btn btn--base btn-shadow whatsapp-connect" data-bs-toggle="tooltip"
-                            title="@lang('Connect your WhatsApp Business account to our platform with embedded signup')">
+                            title="@lang('Connect your existing or new WhatsApp Business account to our platform with embedded signup')">
                             <i class="lab la-whatsapp"></i>
                             @lang('Connect WhatsApp')
                         </button>
@@ -73,6 +73,16 @@
                                                 </li>
                                             @endif
                                             <li class="action-dropdown__item">
+                                                <a class="action-dropdown__link confirmationBtn"
+                                                   href="javascript:void(0)"
+                                                   data-question="@lang('Are you sure to remove this WhatsApp account?')"
+                                                   data-action="{{ route('user.whatsapp.account.delete', $whatsappAccount->id) }}">
+                                                    <span class="text text--danger"><i class="las la-trash"></i>
+                                                        @lang('Delete')
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="action-dropdown__item">
                                                 <a class="action-dropdown__link"
                                                     href="{{ route('user.whatsapp.account.setting', $whatsappAccount->id) }}">
                                                     <span class="text">
@@ -120,6 +130,7 @@
             </div>
         </div>
     </div>
+    <x-confirmation-modal isFrontend="true" />
 @endsection
 
 @push('topbar_tabs')

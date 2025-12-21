@@ -302,4 +302,15 @@ trait WhatsappAccountManager
 
         return to_route('user.whatsapp.account.verification.check', $whatsappAccount->id);
     }
+
+    public function deleteWhatsappAccount($id)
+    {
+        $user            = getParentUser();
+        $whatsappAccount = WhatsappAccount::where('user_id', $user->id)->findOrFailWithApi("whatsapp account", $id);
+
+        $whatsappAccount->delete();
+
+        $message = "WhatsApp account deleted successfully";
+        return responseManager("whatsapp_success", $message, "success");
+    }
 }

@@ -108,6 +108,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('connect/{id}', 'whatsappAccountConnect')->name('connect');
                 Route::get('setting/{id}', 'whatsappAccountSetting')->name('setting');
                 Route::post('setting/{id}', 'whatsappAccountSettingConfirm')->name('setting.confirm');
+                Route::post('delete/{id}', 'deleteWhatsappAccount')->name('delete');
             });
 
             // Whatsapp
