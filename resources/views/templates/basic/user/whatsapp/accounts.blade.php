@@ -1,6 +1,7 @@
 @extends($activeTemplate . 'layouts.master')
 @section('content')
     <div class="dashboard-container">
+        <div id="fb-root"></div>
         <div class="container-top">
             <div class="container-top__left">
                 <h5 class="container-top__title">{{ __(@$pageTitle) }}</h5>
@@ -242,6 +243,11 @@
                 if(!appId || !configId) {
                      notify("error", "@lang('Meta App ID or Configuration ID is missing. Please contact admin.')");
                      return;
+                }
+
+                if (typeof FB === 'undefined') {
+                    notify("error", "@lang('Facebook SDK not initialized. Please refresh the page.')");
+                    return;
                 }
 
                 FB.login(fbLoginCallback, {
