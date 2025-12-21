@@ -138,10 +138,6 @@
     @include('Template::partials.profile_tab')
 @endpush
 
-@push('script-lib')
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-@endpush
-
 @push('script')
     <script>
         (function($) {
@@ -149,16 +145,29 @@
 
             var wabaId = null;
             var accessToken = null;
+            var fbSDKReady = false;
 
+            // Define fbAsyncInit BEFORE loading the SDK
             window.fbAsyncInit = function() {
                 console.log("SKALA: Initializing FB SDK v20.0");
                 FB.init({
                     appId: "{{ gs('meta_app_id') }}",
-                    autoLogAppEvents: true,
+                    cookie: true,
                     xfbml: true,
                     version: 'v20.0'
                 });
+                fbSDKReady = true;
+                console.log("SKALA: FB SDK Ready!");
             };
+
+            // Load the SDK asynchronously
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
 
             window.addEventListener('message', (event) => {
                 if (!event.origin.endsWith('facebook.com')) return;
@@ -245,8 +254,8 @@
                      return;
                 }
 
-                if (typeof FB === 'undefined') {
-                    notify("error", "@lang('Facebook SDK not initialized. Please refresh the page.')");
+                if (!fbSDKReady) {
+                    notify("error", "@lang('Facebook SDK not ready yet. Please wait a moment and try again.')");
                     return;
                 }
 
