@@ -149,12 +149,12 @@
 
             // Define fbAsyncInit BEFORE loading the SDK
             window.fbAsyncInit = function() {
-                console.log("SKALA: Initializing FB SDK v20.0");
+                console.log("SKALA: Initializing FB SDK v24.0");
                 FB.init({
                     appId: "{{ gs('meta_app_id') }}",
                     cookie: true,
                     xfbml: true,
-                    version: 'v20.0'
+                    version: 'v24.0'
                 });
                 fbSDKReady = true;
                 console.log("SKALA: FB SDK Ready!");
@@ -264,7 +264,7 @@
                     response_type: 'code',
                     override_default_response_type: true,
                     extras: {
-                        "version": "v20.0",
+                        "version": "v24.0",
                         sessionInfoVersion: '3', // Checks for Coexistence support
                         setup: {},
                     }
