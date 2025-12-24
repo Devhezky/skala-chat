@@ -264,8 +264,8 @@
                     response_type: 'code',
                     override_default_response_type: true,
                     extras: {
-                        "version": "v24.0",
-                        sessionInfoVersion: '3', // Checks for Coexistence support
+                        "version": "v3",
+                        sessionInfoVersion: '3', // Coexistence support
                         setup: {},
                     }
                 });
