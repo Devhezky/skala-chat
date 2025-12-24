@@ -219,7 +219,7 @@ trait WhatsappAccountManager
             ->where('whatsapp_business_account_id', $request->waba_id)
             ->first();
 
-        $url = "https://graph.facebook.com/v21.0/oauth/access_token";
+        $url = "https://graph.facebook.com/v24.0/oauth/access_token";
 
         $response = Http::get($url, [
             'client_id'     => gs('meta_app_id'),
@@ -256,7 +256,7 @@ trait WhatsappAccountManager
 
     private function longLivedToken($shortLivedToken)
     {
-        $url  = "https://graph.facebook.com/v20.0/oauth/access_token";
+        $url  = "https://graph.facebook.com/v24.0/oauth/access_token";
         $response = Http::get($url, [
             'grant_type' => 'fb_exchange_token',
             'client_id' => gs('meta_app_id'),
