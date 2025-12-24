@@ -269,7 +269,7 @@ trait WhatsappAccountManager
 
     private function subscribeApp($wabaId, $accessToken)
     {
-        $url = "https://graph.facebook.com/v23.0/{$wabaId}/subscribed_apps";
+        $url = "https://graph.facebook.com/v24.0/{$wabaId}/subscribed_apps";
 
         $response = Http::post($url, [
             'access_token' => $accessToken
@@ -278,7 +278,7 @@ trait WhatsappAccountManager
 
     private function metaAppId($wabaId, $accessToken)
     {
-        $appUrl = "https://graph.facebook.com/v23.0/app?{$wabaId}?fields=name,id";
+        $appUrl = "https://graph.facebook.com/v24.0/app?{$wabaId}?fields=name,id";
 
         $appResponse = Http::get($appUrl, [
             'access_token' => $accessToken
@@ -293,7 +293,7 @@ trait WhatsappAccountManager
             ->where('whatsapp_business_account_id', $request->waba_id)
             ->first();
 
-        $url = "https://graph.facebook.com/v23.0/{$request->waba_id}/register";
+        $url = "https://graph.facebook.com/v24.0/{$request->waba_id}/register";
 
         $response = Http::post($url, [
             'access_token' => $request->access_token,
