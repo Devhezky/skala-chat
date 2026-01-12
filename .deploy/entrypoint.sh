@@ -3,6 +3,11 @@
 # Exit on fail
 set -e
 
+# Fix permissions for mounted volumes
+echo "Fixing permissions..."
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
 # Cache configuration
 echo "Caching configuration..."
 php artisan config:cache
