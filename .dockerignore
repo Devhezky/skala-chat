@@ -1,0 +1,17 @@
+/vendor
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/views
+/.git
+/.github
+/.idea
+/.vscode
+.env
+.DS_Store
+Dockerfile
